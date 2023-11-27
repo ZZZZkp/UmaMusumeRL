@@ -1,7 +1,6 @@
 # Copy from https://github.com/vmorarji/TD3-TensorFlow/
 import math
 
-import gym
 import os
 
 import numpy as np
@@ -21,7 +20,7 @@ if not os.path.exists('./models/' + current_time):
 
 # initialise the environment
 env = Game()
-action_dim = 6
+action_dim = 7
 state_dim = env.reset().shape[0]
 result_writer = tf.summary.create_file_writer('./logs/' + current_time)
 

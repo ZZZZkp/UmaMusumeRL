@@ -1,6 +1,7 @@
 import numpy as np
 import random
 
+from action.goOut import go_out
 from action.goTraining import go_training, update_facilities, add_cards_bond_v2, add_stats
 from action.rest import rest
 from uma_model.character import Character
@@ -72,12 +73,12 @@ class Game:
                 if_success, effect = go_training(4, self.character_status)
             case 5:  # 休息
                 rest(self.character_status)
-            case 6:  # 医疗
-                return 0
-            case 7:  # 出行
-                return 0
+            case 6:  # 出行
+                go_out(self.character_status)
+            case 7:  # 医疗
+                return if_success, effect
             case 8:  # 比赛
-                return 0
+                return if_success, effect
         return if_success, effect
 
     def calculate_reward(self, if_success, effect):  # TODO:根据state的改变计算动作的奖励值,奖励函数应该转换增加的属性、pt

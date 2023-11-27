@@ -2,7 +2,6 @@
 
 from collections import deque
 import random
-import gym
 import numpy as np
 from tensorflow.python.keras import models, layers, optimizers
 import tensorflow as tf
@@ -22,7 +21,7 @@ class DQN(object):
 
     def create_model(self):
         """创建一个隐藏层为100的神经网络"""
-        STATE_DIM, ACTION_DIM = 50, 6
+        STATE_DIM, ACTION_DIM = 50, 7
         model = tf.keras.models.Sequential([
             tf.keras.layers.Dense(256, input_dim=STATE_DIM, activation='elu'),
             tf.keras.layers.BatchNormalization(),

@@ -21,7 +21,7 @@ eps = np.finfo(np.float32).eps.item()
 
 def main():
     # TODO: 开始游戏
-    num_actions = 6
+    num_actions = 7
     num_hidden_units = 128
 
     model = ActorCritic(num_actions, num_hidden_units)

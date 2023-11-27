@@ -1,3 +1,5 @@
-def go_out(support_cards, character_status):
-    # TODO: 出行功能
+def go_out(character_status):
+
+    character_status.add_motivation(2)
+
     return character_status
