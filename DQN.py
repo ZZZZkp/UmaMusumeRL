@@ -114,6 +114,9 @@ for i in range(episodes):
             score_list.append(score)
             print('episode:', i, 'score:', score, 'max:', max(score_list))
             break
+
+        if (i + 1)% 200 == 0:
+            agent.save_model()
     # 最后10次的平均分大于 12000 时，停止并保存模型
     if np.mean(score_list[-10:]) > 12000:
         break

@@ -23,7 +23,7 @@ def selectAction(current_state: Status):
     return action
 
 mean_total_reward = 0
-for i in range(101):
+for i in range(100):
     game.reset()
     done = False
     total_reward = 0

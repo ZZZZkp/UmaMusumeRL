@@ -11,13 +11,14 @@ from neural_network.neural_network import get_network, get_simple_network
 
 
 class Game:
-    def __init__(self):
+    def __init__(self, log_every_game=True):
         self._max_steps = 78
         self.character_status = Status(Character('silence_suzuka'),
                                        CompositionInformation(['种马一号', '种马一号'],
                                                               ['うらら～な休日', '迫る熱に押されて', 'はやい！うまい！はやい！', 'ロード·オブ·ウオッカ',
                                                                '感謝は指先まで込めて', '一粒の安らぎ']))
         self.random_distribution_support_cards()
+        self.log_every_game = log_every_game
         # print(self.character_status.support_cards_distribution)
 
     def random_distribution_support_cards(self):  # TODO: 根据得意率随机分配支援卡，返回支援卡分布信息的数据，具体结构应该是二元数组
@@ -51,8 +52,9 @@ class Game:
         # print(self.character_status.support_cards_distribution)
         status_to_net = get_simple_network(self.character_status)
         if self.character_status.turn_count >= 77:
-            print("最终属性")
-            print(self.character_status.stats)
+            if self.log_every_game:
+                print("最终属性")
+                print(self.character_status.stats)
             done = True
 
         return status_to_net, reward, done
@@ -104,9 +106,12 @@ class Game:
         #     result = result * 2
         return result
 
-    def reset(self):
-        self.__init__()
+    def reset(self, log_every_game=True):
+        self.__init__(log_every_game)
         return get_simple_network(self.character_status)
+
+    def print_current_status(self):
+        print(self.character_status.stats)
 
     @property
     def max_steps(self):
