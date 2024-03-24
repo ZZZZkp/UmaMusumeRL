@@ -20,8 +20,8 @@ def get_network(current_state):
 def get_simple_network(current_state):
     # 简化状态特征网络
     net = np.array(
-        [current_state.turn_count / 100, current_state.energy / 10,
-         current_state.motivation])
+        [current_state.turn_count / 100, current_state.energy / 100,
+         current_state.motivation/4])
     net = np.concatenate(
         (net, current_state.stats / 1000,
          current_state.train_level_list / 10))
