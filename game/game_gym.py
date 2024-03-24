@@ -62,8 +62,6 @@ class Game(gym.Env):
         self.random_distribution_support_cards()
         # print(self.character_status.support_cards_distribution)
         status_to_net = get_simple_network(self.character_status)
-        print(self.character_status.turn_count)
-        print(status_to_net)
         if self.character_status.turn_count >= 77:
             if self.log_every_game:
                 print("最终属性")

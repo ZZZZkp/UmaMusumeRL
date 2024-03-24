@@ -23,7 +23,7 @@ def get_simple_network(current_state):
         [current_state.turn_count / 100, current_state.energy / 100,
          current_state.motivation/4])
     net = np.concatenate(
-        (net, current_state.stats / 1000,
+        (net, current_state.stats / 1200,
          current_state.train_level_list / 10))
     net = append_support_cards_distribution_info(net, current_state)
     result = net.flatten()
