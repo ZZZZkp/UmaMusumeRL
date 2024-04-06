@@ -25,6 +25,8 @@ class Game(gym.Env):
             seed: int | None = None,
             options: dict[str, Any] | None = None,
     ):
+        self.character_status = None
+        self.total_rewards = 0
         self.log_every_game = log_every_game
         self._max_steps = 78
         self.observation_space_type = 0
@@ -53,6 +55,7 @@ class Game(gym.Env):
         done = False  # 是否结束
         if_success, effect = self.action_select(action_code)
         reward = self.calculate_reward(if_success, effect)
+        self.total_rewards += reward
         # print('reward：%s' % reward)
 
         add_stats(self.character_status, effect)
@@ -68,8 +71,7 @@ class Game(gym.Env):
         status_to_net = self.get_network()
         if self.character_status.turn_count >= 77:
             if self.log_every_game:
-                print("最终属性")
-                print(self.character_status.stats)
+                print(f"最终属性:{self.character_status.stats} Total Rewards:{self.total_rewards}")
             done = True
 
         return status_to_net, reward, done, False, {}
@@ -160,5 +162,6 @@ class Game(gym.Env):
                                                               ['うらら～な休日', '迫る熱に押されて',
                                                                'はやい！うまい！はやい！', 'ロード·オブ·ウオッカ',
                                                                '感謝は指先まで込めて', '一粒の安らぎ']))
+        self.total_rewards = 0
 
 
