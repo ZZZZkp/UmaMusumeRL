@@ -5,12 +5,12 @@ from action.goTraining import fail_rate_calculate_v2, calculate_train_effect_v2
 
 def get_network(current_state):
     net = np.array(
-        [current_state.turn_count/100, current_state.energy/10, current_state.energy_upper_bound/10, current_state.motivation])
+        [current_state.turn_count/100, current_state.energy/100,  current_state.motivation/4])
     net = np.concatenate(
-        (net, current_state.stats/1000, current_state.stats_upper_bound/1000, current_state.buff, current_state.debuff,
+        (net, current_state.stats/current_state.stats_upper_bound,
          current_state.train_level_list/10))
-    net = append_character_info(net, current_state)
-    net = append_cards_info(net, current_state)
+    # net = append_character_info(net, current_state)
+    # net = append_cards_info(net, current_state)
     net = append_support_cards_distribution_info(net, current_state)
     net = append_train_status(net, current_state)
     result = net.flatten()
@@ -23,7 +23,7 @@ def get_simple_network(current_state):
         [current_state.turn_count / 100, current_state.energy / 100,
          current_state.motivation/4])
     net = np.concatenate(
-        (net, current_state.stats / 1200,
+        (net, current_state.stats / current_state.stats_upper_bound,
          current_state.train_level_list / 10))
     net = append_support_cards_distribution_info(net, current_state)
     result = net.flatten()

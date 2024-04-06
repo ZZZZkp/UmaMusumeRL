@@ -17,7 +17,7 @@ from neural_network import neural_network
 import gymnasium as gym
 
 
-class Game(gym.Env):
+class ContinueGame(gym.Env):
     def __init__(
             self,
             log_every_game = True,
@@ -51,7 +51,8 @@ class Game(gym.Env):
 
         self.character_status.support_cards_distribution = support_cards_distribution
 
-    def step(self, action_code):
+    def step(self, action):
+        action_code = np.argmax(action)
         # print(self.character_status.turn_count)
         # print('当前体力：%s' % self.character_status.energy)
         done = False  # 是否结束
@@ -138,7 +139,7 @@ class Game(gym.Env):
             self.log_every_game = log_every_game
 
         net = self.get_network()
-        self.action_space = spaces.Discrete(7)
+        self.action_space = spaces.Box(0, 1, shape=(7,), dtype=np.float64)
         self.observation_space = spaces.Box(0, 1, shape=(net.shape[0],), dtype=np.float64)
         return net, {}
 
@@ -155,3 +156,4 @@ class Game(gym.Env):
                 return neural_network.get_simple_network(self.character_status)
             case 1:
                 return neural_network.get_network(self.character_status)
+

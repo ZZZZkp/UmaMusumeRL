@@ -7,7 +7,7 @@ class Status:
         self.composition_information = composition_information
         # TODO: 赋予初始属性，速、耐、力、根、智、PT
         self.stats = np.array(self.character.character_status_list['init_stats'])
-        self.stats_upper_bound = np.array([1200, 1200, 1200, 1200, 1200, 1200])
+        self.stats_upper_bound = np.array([1200, 1200, 1200, 1200, 1200, 4000])
         self.energy = 100
         self.energy_upper_bound = 100
         self.motivation = 2
