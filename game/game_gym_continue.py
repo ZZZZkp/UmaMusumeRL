@@ -25,14 +25,11 @@ class ContinueGame(gym.Env):
             seed: int | None = None,
             options: dict[str, Any] | None = None,
     ):
+        self.character_status = None
         self.log_every_game = log_every_game
         self._max_steps = 78
         self.observation_space_type = 0
-        self.character_status = Status(Character('silence_suzuka'),
-                                       CompositionInformation(['种马一号', '种马一号'],
-                                                              ['うらら～な休日', '迫る熱に押されて',
-                                                               'はやい！うまい！はやい！', 'ロード·オブ·ウオッカ',
-                                                               '感謝は指先まで込めて', '一粒の安らぎ']))
+        self.init_status()
 
         if options and options.get('observation_space_type'):
             observation_space_type = options.get('observation_space_type')
@@ -133,6 +130,7 @@ class ContinueGame(gym.Env):
             options: dict[str, Any] | None = None,
     ) -> tuple[ObsType, dict[str, Any]]:
         super().reset(seed=seed)
+        self.init_status()
         self.random_distribution_support_cards()
         if options and options.get('log_every_game'):
             log_every_game = options.get('log_every_game')
@@ -156,4 +154,11 @@ class ContinueGame(gym.Env):
                 return neural_network.get_simple_network(self.character_status)
             case 1:
                 return neural_network.get_network(self.character_status)
+
+    def init_status(self):
+        self.character_status = Status(Character('silence_suzuka'),
+                                       CompositionInformation(['种马一号', '种马一号'],
+                                                              ['うらら～な休日', '迫る熱に押されて',
+                                                               'はやい！うまい！はやい！', 'ロード·オブ·ウオッカ',
+                                                               '感謝は指先まで込めて', '一粒の安らぎ']))
 
