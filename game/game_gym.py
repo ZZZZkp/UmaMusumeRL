@@ -66,10 +66,11 @@ class Game(gym.Env):
         add_cards_bond_v2(if_success, action_code, self.character_status)
 
         if self.print_each_actions:
-            print(f'当前回合数:{self.character_status.turn_count}\n')
-            print(f'当前支援角色分布:\n{self.character_status.support_cards_distribution}\n')
-            print(f'当前动作选择:{action_code}\n')
-            print(f'属性变动:{effect}\n')
+            print(f'当前回合数:{self.character_status.turn_count}')
+            print(f'当前支援角色分布:\n{self.character_status.support_cards_distribution}')
+            success_str = '成功' if if_success else '失败'
+            print(f'当前动作选择:{action_code},{success_str},剩余体力值:{self.character_status.energy}')
+            print(f'属性变动:{effect}')
             print(f'当前角色属性:{self.character_status.stats}\n')
 
 
@@ -105,8 +106,10 @@ class Game(gym.Env):
                 if_success, effect = go_training(4, self.character_status)
             case 5:  # 休息
                 rest(self.character_status)
+                if_success = True
             case 6:  # 出行
                 go_out(self.character_status)
+                if_success = True
             case 7:  # 医疗
                 return if_success, effect
             case 8:  # 比赛

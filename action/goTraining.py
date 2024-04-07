@@ -83,7 +83,7 @@ def add_stats(character_status, train_effect):
 
 
 def add_cards_bond_v2(if_success, train_type, character_status):
-    if if_success:
+    if if_success and train_type < 5:
         for i, value in enumerate(character_status.support_cards_distribution[train_type]):
             if value == 1:
                 card = character_status.composition_information.support_card_list[i]
@@ -91,7 +91,7 @@ def add_cards_bond_v2(if_success, train_type, character_status):
 
 
 def update_facilities(if_success, train_type, character_status):
-    if if_success:
+    if if_success and train_type < 5:
         character_status.train_times[train_type] += 1
         for i, times in enumerate(character_status.train_times):
             if times >= 16:
