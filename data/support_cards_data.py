@@ -109,7 +109,7 @@ support_card_data = {
     '一粒の安らぎ': {
         'name': '一粒の安らぎ',
         'unique_effect': 6,  # TODO：固有加成类型
-        'card_type': 0,  # 支援卡类型，0-6分别为速耐力根智友人团队
+        'card_type': 1,  # 支援卡类型，0-6分别为速耐力根智友人团队
         'friendship_bonus': 37,  # 友情加成
         'motivation_bonus': 0,  # 干劲效果提升
         'train_effect_bonus': 15,  # 训练效果提升

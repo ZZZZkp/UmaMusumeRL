@@ -165,11 +165,7 @@ class Game(gym.Env):
         return self._max_steps
 
     def get_network(self):
-        match self.observation_space_type:
-            case 0:
-                return neural_network.get_simple_network(self.character_status)
-            case 1:
-                return neural_network.get_network(self.character_status)
+        return neural_network.get_specific_observation_data(self.character_status, self.observation_space_type)
 
     def init_status(self):
         self.character_status = Status(Character('silence_suzuka'),
