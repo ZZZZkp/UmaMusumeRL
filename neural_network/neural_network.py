@@ -71,7 +71,7 @@ def append_cards_info(net, current_state):
 # 支援角色羁绊值
 def append_cards_bonds(net, current_state):
     for card in current_state.composition_information.support_card_list:
-        net = np.append(net, list(card.values())[14])
+        net = np.append(net, list(card.values())[14]/100)
     return net
 
 
