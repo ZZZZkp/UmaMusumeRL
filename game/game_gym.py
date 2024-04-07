@@ -20,21 +20,24 @@ import gymnasium as gym
 class Game(gym.Env):
     def __init__(
             self,
-            log_every_game = True,
             *,
             seed: int | None = None,
             options: dict[str, Any] | None = None,
     ):
         self.character_status = None
         self.total_rewards = 0
-        self.log_every_game = log_every_game
+        self.log_every_game = True
         self._max_steps = 78
         self.observation_space_type = 0
+        self.print_each_actions = False
         self.init_status()
 
-        if options and options.get('observation_space_type'):
-            observation_space_type = options.get('observation_space_type')
-            self.observation_space_type = observation_space_type
+        if options:
+            if options.get('observation_space_type'):
+                observation_space_type = options.get('observation_space_type')
+                self.observation_space_type = observation_space_type
+            if options.get('print_each_actions'):
+                self.print_each_actions = options.get('print_each_actions')
 
         self.reset(seed=seed, options=options)
 
@@ -61,6 +64,16 @@ class Game(gym.Env):
         add_stats(self.character_status, effect)
         update_facilities(if_success, action_code, self.character_status)
         add_cards_bond_v2(if_success, action_code, self.character_status)
+
+        if self.print_each_actions:
+            print(f'当前回合数:{self.character_status.turn_count}\n')
+            print(f'当前支援角色分布:\n{self.character_status.support_cards_distribution}\n')
+            print(f'当前动作选择:{action_code}\n')
+            print(f'属性变动:{effect}\n')
+            print(f'当前角色属性:{self.character_status.stats}\n')
+
+
+
         # print(self.character_status.train_level_list)
         # print(self.character_status.stats)
         # TODO: 行动后事件，例如出行、育成结束后事件等
@@ -138,8 +151,7 @@ class Game(gym.Env):
             self.log_every_game = log_every_game
 
         net = self.get_network()
-        self.action_space = spaces.Discrete(7)
-        self.observation_space = spaces.Box(0, 1, shape=(net.shape[0],), dtype=np.float64)
+        self.set_space(net)
         return net, {}
 
     def print_current_status(self):
@@ -164,4 +176,6 @@ class Game(gym.Env):
                                                                '感謝は指先まで込めて', '一粒の安らぎ']))
         self.total_rewards = 0
 
-
+    def set_space(self, net):
+        self.action_space = spaces.Discrete(7)
+        self.observation_space = spaces.Box(0, 1, shape=(net.shape[0],), dtype=np.float64)
