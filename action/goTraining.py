@@ -58,7 +58,7 @@ def calculate_train_effect_v2(train_type, character_status):
     for i, value in enumerate(character_status.support_cards_distribution[train_type]):
         if value == 1:
             card = character_status.composition_information.support_card_list[i]
-
+            # TODO: 后续需要修改成只加该训练能加的属性，现在属性加成在本来+0的训练也会生效。
             basic_effect += np.array(card['stats_bonus'])
             motivation_fix += motivation_base * card['motivation_bonus'] / 100
             train_effect_bonus_fix += card['train_effect_bonus'] / 100
