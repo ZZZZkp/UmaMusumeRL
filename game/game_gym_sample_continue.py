@@ -27,5 +27,5 @@ class SampleContinueGame(Game):
         return status_to_net, reward, terminated, truncated, info
 
     def set_space(self, net):
-        self.action_space = spaces.Box(0, 1, shape=(7,), dtype=np.float64)
+        self.action_space = spaces.Box(-10, 10, shape=(7,), dtype=np.float64)
         self.observation_space = spaces.Box(0, 1, shape=(net.shape[0],), dtype=np.float64)
