@@ -63,7 +63,7 @@ def calculate_train_effect_v2(train_type, character_status):
             motivation_fix += motivation_base * card['motivation_bonus'] / 100
             train_effect_bonus_fix += card['train_effect_bonus'] / 100
             card_count += 1
-            if card['starting_bond_up'] >= 80 & card['card_type'] == train_type:  # TODO：以后考虑友人和团队卡
+            if card['starting_bond_up'] >= 80 and card['card_type'] == train_type:  # TODO：以后考虑友人和团队卡
                 friendship_bonus_fix *= (1 + card['friendship_bonus'] / 100)
 
     return np.clip(np.ceil(basic_effect * growth_rate * motivation_fix * train_effect_bonus_fix * (
