@@ -33,11 +33,14 @@ class Game(gym.Env):
         self.init_status()
 
         if options:
-            if options.get('observation_space_type'):
+            if 'observation_space_type' in options:
                 observation_space_type = options.get('observation_space_type')
                 self.observation_space_type = observation_space_type
-            if options.get('print_each_actions'):
+            if 'print_each_actions' in options:
                 self.print_each_actions = options.get('print_each_actions')
+            if 'log_every_game' in options:
+                    log_every_game = options.get('log_every_game')
+                    self.log_every_game = log_every_game
 
         self.reset(seed=seed, options=options)
 
@@ -149,9 +152,6 @@ class Game(gym.Env):
 
         self.init_status()
         self.random_distribution_support_cards()
-        if options and options.get('log_every_game'):
-            log_every_game = options.get('log_every_game')
-            self.log_every_game = log_every_game
 
         net = self.get_network()
         self.set_space(net)
